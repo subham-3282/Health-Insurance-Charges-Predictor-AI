@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import matplotlib.pyplot as plt
 
 scaler = joblib.load("scaler.pkl")
 le_gender = joblib.load("label_encoder_sex.pkl")
@@ -20,24 +21,13 @@ st.markdown("""
     background-color: #f5f7fb;
 }
 
-.title {
-    text-align: center;
-    font-size: 40px;
-    font-weight: bold;
-    color: white;
-}
-
-.subtitle {
-    text-align: center;
-    color: white;
-    font-size: 18px;
-}
-
 .header-box {
     background: linear-gradient(90deg,#4facfe,#00f2fe);
     padding: 30px;
     border-radius: 12px;
     margin-bottom: 25px;
+    text-align:center;
+    color:white;
 }
 
 .card {
@@ -54,7 +44,6 @@ st.markdown("""
     text-align: center;
     font-size: 28px;
     font-weight: bold;
-    color: black;
 }
 
 </style>
@@ -62,10 +51,8 @@ st.markdown("""
 
 st.markdown("""
 <div class="header-box">
-    <div class="title">🏥 Health Insurance Charges Predictor</div>
-    <div class="subtitle">
-        Estimate medical insurance cost instantly using Machine Learning
-    </div>
+<h1>🏥 Health Insurance Charges Predictor</h1>
+<p>AI-powered medical cost estimation dashboard</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -113,10 +100,77 @@ if submitted:
 
     st.markdown(f"""
         <div class="result-box">
-            💰 Estimated Insurance Cost<br><br>
-            Rs.{prediction:,.2f}
+        💰 Estimated Insurance Cost<br><br>
+        Rs.{prediction:,.2f}
         </div>
     """, unsafe_allow_html=True)
+
+    st.divider()
+
+    st.subheader("📊 Key Performance Indicators")
+
+    if bmi < 18.5:
+        bmi_status = "Underweight"
+    elif bmi < 25:
+        bmi_status = "Normal"
+    elif bmi < 30:
+        bmi_status = "Overweight"
+    else:
+        bmi_status = "Obese"
+
+    risk_score = (
+        age * 0.3 +
+        bmi * 0.4 +
+        (1 if smoker == "yes" else 0) * 30
+    )
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    col1.metric("👤 Age", age)
+    col2.metric("⚖ BMI Category", bmi_status)
+    col3.metric("🚬 Smoker", smoker.upper())
+    col4.metric("⚠ Risk Score", f"{risk_score:.1f}")
+
+    st.subheader("📈 Analytics Dashboard")
+
+    colA, colB = st.columns(2)
+
+    # -------- BMI Analysis Chart --------
+    with colA:
+        st.write("### BMI Health Range")
+
+        categories = ["Underweight", "Normal", "Overweight", "Obese"]
+        ranges = [18.5, 25, 30, 35]
+
+        fig1 = plt.figure()
+        plt.bar(categories, ranges)
+        plt.axhline(y=bmi, linestyle="--")
+        plt.title("BMI Category Comparison")
+        st.pyplot(fig1)
+
+    with colB:
+        st.write("### Estimated Cost Drivers")
+
+        drivers = ["Age Impact", "BMI Impact", "Children Impact"]
+        values = [age * 0.2, bmi * 0.3, children * 5]
+
+        fig2 = plt.figure()
+        plt.bar(drivers, values)
+        plt.title("Factors Influencing Cost")
+        st.pyplot(fig2)
+
+    st.subheader("🎯 Health Risk Indicator")
+
+    risk_percent = min(int(risk_score), 100)
+    st.progress(risk_percent)
+
+    if risk_percent < 30:
+        st.success("Low Risk Profile ✅")
+    elif risk_percent < 60:
+        st.warning("Moderate Risk Profile ⚠")
+    else:
+        st.error("High Risk Profile 🚨")
+
 
 st.markdown("""
 <hr>
