@@ -1,4 +1,5 @@
 🏥 Health Insurance Charges Predictor (AI/ML Project)
+
 📌 Project Overview
 
 The Health Insurance Charges Predictor is a Machine Learning web application that estimates medical insurance costs based on user details such as age, BMI, smoking habits, and number of children.
@@ -114,3 +115,4 @@ Python
 📜 License
 
 This project is developed for educational and academic purposes.
+
