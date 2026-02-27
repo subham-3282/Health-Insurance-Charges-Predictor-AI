@@ -171,12 +171,8 @@ div[data-baseweb="select"] > div,
 .stNumberInput input {
     border-radius: 16px !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    color: #1e293b !important;
 }
 
-div[data-baseweb="select"] span {
-    color: #1e293b !important;
-}
 
 div[data-baseweb="select"] > div:hover,
 .stNumberInput input:hover {
