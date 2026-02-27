@@ -157,24 +157,18 @@ st.markdown("""
 /* ---------- Premium Inputs ---------- */
 label {
     font-weight: 600 !important;
-    color: #a5b4fc !important;
     letter-spacing: 0.5px;
 }
 
 /* Input Fields and Selectboxes */
 div[data-baseweb="select"] > div,
 .stNumberInput input {
-    background: rgba(255, 255, 255, 0.05) !important;
     border-radius: 16px !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    color: white !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
 div[data-baseweb="select"] > div:hover,
 .stNumberInput input:hover {
-    background: rgba(255, 255, 255, 0.08) !important;
     border: 1px solid rgba(0, 242, 254, 0.5) !important;
 }
 
@@ -182,12 +176,42 @@ div[data-baseweb="select"] > div:focus-within,
 .stNumberInput input:focus {
     border: 1px solid #00f2fe !important;
     box-shadow: 0 0 20px rgba(0, 242, 254, 0.4), inset 0 2px 4px rgba(0,0,0,0.1) !important;
-    background: rgba(0, 242, 254, 0.05) !important;
     transform: translateY(-2px);
 }
 
-div[data-baseweb="select"] span {
-    color: white !important;
+/* ---------- Dark Theme Defaults ---------- */
+@media (prefers-color-scheme: dark) {
+    label { color: #a5b4fc !important; }
+    div[data-baseweb="select"] > div,
+    .stNumberInput input {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    div[data-baseweb="select"] span { color: white !important; }
+}
+
+/* ---------- Light Theme Overrides ---------- */
+@media (prefers-color-scheme: light) {
+    label { color: #334155 !important; }
+    div[data-baseweb="select"] > div,
+    .stNumberInput input {
+        background: rgba(0, 0, 0, 0.04) !important;
+        border: 1px solid rgba(0, 0, 0, 0.15) !important;
+        color: #1e293b !important;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+    div[data-baseweb="select"] span { color: #1e293b !important; }
+    div[data-baseweb="select"] > div:hover,
+    .stNumberInput input:hover {
+        background: rgba(0, 0, 0, 0.06) !important;
+        border: 1px solid rgba(0, 114, 255, 0.4) !important;
+    }
+    div[data-baseweb="select"] > div:focus-within,
+    .stNumberInput input:focus {
+        background: rgba(0, 114, 255, 0.04) !important;
+    }
 }
 
 /* Slider Customization */
