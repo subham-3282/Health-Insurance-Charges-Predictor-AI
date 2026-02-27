@@ -179,41 +179,6 @@ div[data-baseweb="select"] > div:focus-within,
     transform: translateY(-2px);
 }
 
-/* ---------- Dark Theme Defaults ---------- */
-@media (prefers-color-scheme: dark) {
-    label { color: #a5b4fc !important; }
-    div[data-baseweb="select"] > div,
-    .stNumberInput input {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-    }
-    div[data-baseweb="select"] span { color: white !important; }
-}
-
-/* ---------- Light Theme Overrides ---------- */
-@media (prefers-color-scheme: light) {
-    label { color: #334155 !important; }
-    div[data-baseweb="select"] > div,
-    .stNumberInput input {
-        background: rgba(0, 0, 0, 0.04) !important;
-        border: 1px solid rgba(0, 0, 0, 0.15) !important;
-        color: #1e293b !important;
-        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-    }
-    div[data-baseweb="select"] span { color: #1e293b !important; }
-    div[data-baseweb="select"] > div:hover,
-    .stNumberInput input:hover {
-        background: rgba(0, 0, 0, 0.06) !important;
-        border: 1px solid rgba(0, 114, 255, 0.4) !important;
-    }
-    div[data-baseweb="select"] > div:focus-within,
-    .stNumberInput input:focus {
-        background: rgba(0, 114, 255, 0.04) !important;
-    }
-}
-
 /* Slider Customization */
 div[data-baseweb="slider"] {
     padding-top: 10px;
