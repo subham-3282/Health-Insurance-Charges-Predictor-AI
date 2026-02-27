@@ -214,15 +214,16 @@ div[data-baseweb="slider"] div > div {
 }
 
 /* ---------- Submit Button ---------- */
-.stButton>button {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    color: white;
-    border-radius: 16px;
+.stButton>button,
+.stFormSubmitButton>button {
+    background: linear-gradient(135deg, #00c6ff, #0072ff) !important;
+    color: white !important;
+    border-radius: 16px !important;
     height: 55px;
     font-size: 18px;
     font-weight: 800;
     letter-spacing: 1px;
-    border: none;
+    border: none !important;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 8px 25px rgba(0, 114, 255, 0.4);
     width: 100%;
@@ -231,7 +232,8 @@ div[data-baseweb="slider"] div > div {
     overflow: hidden;
 }
 
-.stButton>button::before {
+.stButton>button::before,
+.stFormSubmitButton>button::before {
     content: '';
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -240,26 +242,21 @@ div[data-baseweb="slider"] div > div {
     transition: opacity 0.3s ease;
 }
 
-.stButton>button:hover {
+.stButton>button:hover,
+.stFormSubmitButton>button:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 35px rgba(0, 114, 255, 0.6);
 }
 
-.stButton>button:active {
+.stButton>button:active,
+.stFormSubmitButton>button:active {
     transform: translateY(2px);
 }
 
-.stButton>button p {
+.stButton>button p,
+.stFormSubmitButton>button p {
     position: relative;
     z-index: 1;
-    color: white !important;
-}
-
-/* Force button text white */
-.stButton>button, .stFormSubmitButton>button {
-    color: white !important;
-}
-.stFormSubmitButton>button p {
     color: white !important;
 }
 
