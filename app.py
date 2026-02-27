@@ -155,9 +155,15 @@ st.markdown("""
 }
 
 /* ---------- Premium Inputs ---------- */
-label {
+label, .stSlider label, .stNumberInput label, .stSelectbox label {
     font-weight: 600 !important;
     letter-spacing: 0.5px;
+    color: white !important;
+}
+
+/* Force all form text white on dark bg */
+.stMarkdown, .stSubheader, h1, h2, h3, h4, p, span.css-10trblm {
+    color: white !important;
 }
 
 /* Input Fields and Selectboxes */
@@ -246,6 +252,15 @@ div[data-baseweb="slider"] div > div {
 .stButton>button p {
     position: relative;
     z-index: 1;
+    color: white !important;
+}
+
+/* Force button text white */
+.stButton>button, .stFormSubmitButton>button {
+    color: white !important;
+}
+.stFormSubmitButton>button p {
+    color: white !important;
 }
 
 /* ---------- Result Box ---------- */
