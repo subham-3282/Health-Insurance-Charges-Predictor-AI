@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import joblib
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 
 # ---------------- LOAD MODELS ----------------
 scaler = joblib.load("scaler.pkl")
@@ -116,31 +117,41 @@ st.markdown("""
     overflow: hidden;
 }
 
-/* ---------- Nurse Walking Animation ---------- */
-.nurse-walk {
+/* ---------- Healthcare Team Walking Animation ---------- */
+.medic-parade {
     position: absolute;
-    bottom: 8px;
-    left: -80px;
-    font-size: 42px;
-    animation: nurseWalk 12s linear infinite;
-    z-index: 2;
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+    bottom: 10px;
+    left: 0; right: 0;
+    width: 100%;
+    height: 50px;
     pointer-events: none;
+    z-index: 2;
+    overflow: visible;
 }
 
-.nurse-walk .nurse-body {
+.medic-char {
+    position: absolute;
+    bottom: 0;
+    font-size: 36px;
+    animation: walkAcross var(--walk-speed, 14s) linear infinite;
+    animation-delay: var(--walk-delay, 0s);
+    left: -60px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+
+.medic-char span {
     display: inline-block;
-    animation: nurseStep 0.5s ease-in-out infinite alternate;
+    animation: stepping 0.4s ease-in-out infinite alternate;
 }
 
-@keyframes nurseWalk {
-    0%   { left: -80px; }
-    100% { left: 105%; }
+@keyframes walkAcross {
+    0%   { left: -60px; }
+    100% { left: 110%; }
 }
 
-@keyframes nurseStep {
-    0%   { transform: translateY(0px) rotate(-3deg); }
-    100% { transform: translateY(-6px) rotate(3deg); }
+@keyframes stepping {
+    0%   { transform: translateY(0) rotate(-2deg); }
+    100% { transform: translateY(-5px) rotate(2deg); }
 }
 
 /* ---------- Premium Inputs ---------- */
@@ -392,7 +403,16 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ---------------- INPUT SECTION ----------------
-st.markdown('<div class="card"><div class="nurse-walk"><span class="nurse-body">👩‍⚕️</span></div>', unsafe_allow_html=True)
+st.markdown('''
+<div class="card">
+    <div class="medic-parade">
+        <div class="medic-char" style="--walk-speed:15s; --walk-delay:0s;"><span>👨‍⚕️</span></div>
+        <div class="medic-char" style="--walk-speed:15s; --walk-delay:3s;"><span>👩‍⚕️</span></div>
+        <div class="medic-char" style="--walk-speed:15s; --walk-delay:6s;"><span>🧑‍🔬</span></div>
+        <div class="medic-char" style="--walk-speed:15s; --walk-delay:9s;"><span>🚑</span></div>
+        <div class="medic-char" style="--walk-speed:15s; --walk-delay:12s;"><span>💊</span></div>
+    </div>
+''', unsafe_allow_html=True)
 
 st.subheader("📝 Patient Information")
 
@@ -488,22 +508,66 @@ if submitted:
     # -------- CHARTS --------
     st.subheader("📊 Health Analytics")
 
-    colA,colB = st.columns(2)
+    colA, colB = st.columns(2)
 
     with colA:
-        fig1 = plt.figure()
-        plt.bar(["Underweight","Normal","Overweight","Obese"],
-                [18.5,25,30,35])
-        plt.axhline(y=bmi, linestyle="--")
-        plt.title("BMI Comparison")
-        st.pyplot(fig1)
+        categories = ["Underweight", "Normal", "Overweight", "Obese"]
+        thresholds = [18.5, 24.9, 29.9, 40]
+        colors = ["#38bdf8", "#4ade80", "#facc15", "#f87171"]
+        fig1 = go.Figure()
+        fig1.add_trace(go.Bar(
+            x=categories, y=thresholds,
+            marker=dict(color=colors, line=dict(width=0)),
+            text=[f"{v}" for v in thresholds],
+            textposition="outside",
+            textfont=dict(color="white", size=13, family="Inter"),
+            hovertemplate="%{x}: BMI < %{y}<extra></extra>"
+        ))
+        fig1.add_hline(y=bmi, line_dash="dot", line_color="#00f2fe", line_width=3,
+                       annotation_text=f"Your BMI: {bmi:.1f}",
+                       annotation_font_color="#00f2fe",
+                       annotation_font_size=14)
+        fig1.update_layout(
+            title=dict(text="🏃 BMI Category Comparison", font=dict(size=18, color="white")),
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#94a3b8", family="Inter"),
+            xaxis=dict(showgrid=False, color="#94a3b8"),
+            yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", color="#94a3b8", title="BMI Value"),
+            margin=dict(l=40, r=20, t=50, b=40),
+            height=380,
+            bargap=0.35
+        )
+        st.plotly_chart(fig1, use_container_width=True)
 
     with colB:
-        fig2 = plt.figure()
-        plt.bar(["Age","BMI","Children"],
-                [age*0.2,bmi*0.3,children*5])
-        plt.title("Cost Drivers")
-        st.pyplot(fig2)
+        drivers = ["Age Factor", "BMI Factor", "Children Factor"]
+        values = [age * 0.2, bmi * 0.3, children * 5]
+        colors2 = ["#818cf8", "#f472b6", "#34d399"]
+        fig2 = go.Figure()
+        fig2.add_trace(go.Bar(
+            x=drivers, y=values,
+            marker=dict(
+                color=colors2,
+                line=dict(width=0)
+            ),
+            text=[f"{v:.1f}" for v in values],
+            textposition="outside",
+            textfont=dict(color="white", size=13, family="Inter"),
+            hovertemplate="%{x}: %{y:.1f}<extra></extra>"
+        ))
+        fig2.update_layout(
+            title=dict(text="💰 Insurance Cost Drivers", font=dict(size=18, color="white")),
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#94a3b8", family="Inter"),
+            xaxis=dict(showgrid=False, color="#94a3b8"),
+            yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.05)", color="#94a3b8", title="Impact Score"),
+            margin=dict(l=40, r=20, t=50, b=40),
+            height=380,
+            bargap=0.35
+        )
+        st.plotly_chart(fig2, use_container_width=True)
 
     # -------- RISK BAR --------
     st.subheader("🎯 Health Risk Indicator")
