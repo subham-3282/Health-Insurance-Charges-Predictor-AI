@@ -155,7 +155,7 @@ if submitted:
         values = [age * 0.2, bmi * 0.3, children * 5]
 
         fig2 = plt.figure()
-        plt.bar(drivers, values,color='27F5A6')
+        plt.bar(drivers, values,color='#27F5A6')
         plt.title("Factors Influencing Cost")
         st.pyplot(fig2)
 
