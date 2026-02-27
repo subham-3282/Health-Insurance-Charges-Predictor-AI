@@ -113,6 +113,34 @@ st.markdown("""
     margin-bottom: 20px;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+}
+
+/* ---------- Nurse Walking Animation ---------- */
+.nurse-walk {
+    position: absolute;
+    bottom: 8px;
+    left: -80px;
+    font-size: 42px;
+    animation: nurseWalk 12s linear infinite;
+    z-index: 2;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
+    pointer-events: none;
+}
+
+.nurse-walk .nurse-body {
+    display: inline-block;
+    animation: nurseStep 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes nurseWalk {
+    0%   { left: -80px; }
+    100% { left: 105%; }
+}
+
+@keyframes nurseStep {
+    0%   { transform: translateY(0px) rotate(-3deg); }
+    100% { transform: translateY(-6px) rotate(3deg); }
 }
 
 /* ---------- Premium Inputs ---------- */
@@ -351,13 +379,20 @@ div[data-baseweb="slider"] div > div {
 # ---------------- HEADER ----------------
 st.markdown("""
 <div class="header-box">
-    <h1><span style="font-size: 50px;">🏥</span> AI Health Insurance Charges Predictor</h1>
-    <p style="font-size: 18px; opacity: 0.9; margin-top: 10px; font-weight: 500; letter-spacing: 1px;">Smart Medical Cost Estimation • Predictive Analytics</p>
+    <h1>
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#00f2fe" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 12px; filter: drop-shadow(0 0 10px #00f2fe);">
+            <path d="M18 20V10"/><path d="M6 20V10"/><path d="M2 20h20"/>
+            <path d="M4 10h16"/><path d="M12 4v6"/><path d="M9 7h6"/>
+            <path d="M2 10l10-6 10 6"/>
+        </svg>
+        AI Health Insurance Charges Predictor
+    </h1>
+    <p style="font-size: 18px; opacity: 0.9; margin-top: 10px; font-weight: 500; letter-spacing: 1px;">🩺 Smart Medical Cost Estimation • Predictive Analytics 💊</p>
 </div>
 """, unsafe_allow_html=True)
 
 # ---------------- INPUT SECTION ----------------
-st.markdown('<div class="card">', unsafe_allow_html=True)
+st.markdown('<div class="card"><div class="nurse-walk"><span class="nurse-body">👩‍⚕️</span></div>', unsafe_allow_html=True)
 
 st.subheader("📝 Patient Information")
 
