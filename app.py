@@ -143,7 +143,7 @@ if submitted:
         ranges = [18.5, 25, 30, 35]
 
         fig1 = plt.figure()
-        plt.bar(categories, ranges)
+        plt.bar(categories, ranges,color='cyan')
         plt.axhline(y=bmi, linestyle="--")
         plt.title("BMI Category Comparison")
         st.pyplot(fig1)
@@ -155,7 +155,7 @@ if submitted:
         values = [age * 0.2, bmi * 0.3, children * 5]
 
         fig2 = plt.figure()
-        plt.bar(drivers, values)
+        plt.bar(drivers, values,color='27F5A6')
         plt.title("Factors Influencing Cost")
         st.pyplot(fig2)
 
