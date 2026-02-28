@@ -143,9 +143,7 @@ stickers_html = """
 # We only define the string here, it gets rendered inside the 'home' and 'landing' page blocks.
 
 
-# ==========================================
-# PAGE 0: LANDING PAGE
-# ==========================================
+
 if st.session_state.page == "landing":
 
     # Render floating stickers on the landing page too
@@ -224,10 +222,9 @@ if st.session_state.page == "landing":
 # ==========================================
 if st.session_state.page == "home":
     
-    # Render floating stickers only on the Home page
+   
     st.markdown(stickers_html, unsafe_allow_html=True)
-    
-    # Inject Home specific CSS (Light Theme, Clean SaaS)
+
     st.markdown("""
     <style>
     /* Center the title properly */
@@ -238,9 +235,12 @@ if st.session_state.page == "home":
     .custom-subheader span { background-color: #3b82f6; color: #ffffff; width: 28px; height: 28px; font-size: 15px; display: flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 12px; }
     
     /* Input Styling - Make Everything Bigger */
-    div[data-baseweb="input"] > div, div[data-baseweb="select"] > div { transition: border-color 0.2s ease, box-shadow 0.2s ease !important; padding: 6px !important; font-size: 16px !important; }
+    div[data-baseweb="input"] > div, div[data-baseweb="select"] > div { transition: border-color 0.2s ease, box-shadow 0.2s ease !important; min-height: 46px !important; }
     div[data-baseweb="input"] > div:hover, div[data-baseweb="select"] > div:hover { border-color: #3b82f6 !important; }
     label { font-size: 16px !important; font-weight: 500 !important; }
+    /* Fix text cut off in select options */
+    div[data-baseweb="select"] * { font-size: 15px !important; }
+    div[data-baseweb="input"] input { font-size: 15px !important; }
 
     /* Button Styling overrides */
     div.stButton > button:first-child { background-color: #3b82f6 !important; color: white !important; font-weight: 600 !important; border-radius: 8px !important; padding: 16px 24px !important; border: none !important; width: 100% !important; font-size: 18px !important; margin-top: 20px; }
@@ -355,12 +355,9 @@ if st.session_state.page == "home":
                 st.rerun()
 
 
-# ==========================================
-# PAGE 2: ANALYSIS DASHBOARD (DARK THEME)
-# ==========================================
+
 elif st.session_state.page == "analysis":
 
-    # Inject Analysis specific CSS (Dark Theme Dashboard matching screenshot)
     st.markdown("""
     <style>
     /* Top Metric Cards */
